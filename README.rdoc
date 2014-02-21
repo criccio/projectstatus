@@ -16,3 +16,6 @@ the admin tool and runs it's unit tests, another that deploys it, and then a thi
 In this tool, your project would be 'admin tool' and you would create one card for the build/unit test job and one card for the
 integration test job
 
+config:
+If your jenkins server requires authentication in order to see job stats, update config/environments/development.rb to add 
+an entry in the config.jenkins_auth_map hash
