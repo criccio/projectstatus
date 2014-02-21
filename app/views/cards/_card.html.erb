@@ -1,0 +1,9 @@
+<% card.update_info %>
+
+<div id="shell">
+    <div id="title">
+        <%= card.title %><div id="delete"><%= link_to 'X', [card.project, card],method: :delete, data: { confirm: 'Are you sure?' } %></div>
+    </div>
+    <div id="content"><%= card.test_count_report %><br/><%= card.build_report %><br/><a href="<%= card.jenkins_url %>">Jenkins Job</a><br/>Last Updated: <%= card.updated_time %></div>
+</div>
+<br/>

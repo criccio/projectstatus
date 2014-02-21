@@ -1,0 +1,16 @@
+<p>
+    <strong>Title:</strong>
+    <%= @project.title %>
+</p>
+<h2>Cards</h2>
+<%= render @project.cards %>
+
+<% @project.generate_messages %>
+
+<%= @project.test_message %>
+<br/>
+<%= @project.build_message %>
+
+<%= render 'cards/form' %>
+<%= link_to 'Back', projects_path %>
+| <%= link_to 'Edit', edit_project_path(@project) %>

@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  jenkins_url: MyString
+  project_id: 
+
+two:
+  title: MyString
+  jenkins_url: MyString
+  project_id: 
