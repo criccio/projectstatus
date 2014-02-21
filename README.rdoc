@@ -1,28 +1,18 @@
 == README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+- A rails app for collecting a project's test status from various jenkins builds. Currently supports build pass rate, and test counts
 
-Things you may want to cover:
+install for local development:
+* clone into your local directory
+* bundle install
+* rails server
 
-* Ruby version
+concepts:
+* Project - a container for stats about a specific project
+* Card - a single contributor to the overall stats of the project
 
-* System dependencies
+Let's say you have an admin tool that your team is working on. You have a jenkins build server with 3 jobs, one that builds
+the admin tool and runs it's unit tests, another that deploys it, and then a third that runs integration tests.
+In this tool, your project would be 'admin tool' and you would create one card for the build/unit test job and one card for the
+integration test job
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
