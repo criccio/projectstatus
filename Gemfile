@@ -47,3 +47,5 @@ end
 gem 'httparty'
 gem 'friendly_id', '~> 5.0.0'
 gem 'bcrypt-ruby'
+gem 'xml-simple'
+gem 'nokogiri'

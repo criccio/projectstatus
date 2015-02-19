@@ -41,55 +41,20 @@ class Card < ActiveRecord::Base
   def update_info
     now = Time.now
 
-    if self.updated_time + 20.minutes > now #TODO configure update interval
-      logger.debug('need to wait 20 minutes')
+    if self.updated_time + Rails.application.config.update_interval > now
+      logger.debug("need to wait #{Rails.application.config.update_interval} seconds")
       return
     end
 
     #now get updated values
     self.updated_time = now
 
-    path = "#{jenkins_url}/api/json?tree=builds[number,status,timestamp,id,result,actions[totalCount]]"
+    job_data = JenkinsJobData.new(jenkins_url,now)
 
-    auth_details = NIL
-    Rails.application.config.jenkins_auth_map.each do | key,value |
-      if jenkins_url =~ /#{key}/
-        auth_details = value
-      end
-    end
-
-    if auth_details.nil?
-      response = HTTParty.get(path)
-    else
-      response = HTTParty.get(path, :basic_auth =>{:username => auth_details[:user], :password => auth_details[:pw]})
-    end
-
-    number_of_builds = 0
-    number_of_failed_builds = 0
-    first_build_test_count = 0
-    last_build_test_count = 0
-    builds = response['builds']
-    builds = [] if response['builds'].nil?
-    builds.each do | build |
-      buildTime = Time.at(build['timestamp'].to_f / 1000)
-      if buildTime > now - 7.days  # TODO configurable time window for builds
-        number_of_builds += 1
-        unless build['result'] =~ /SUCCESS/
-          number_of_failed_builds += 1
-        end
-        build['actions'].each do | actions |
-          unless actions['totalCount'].nil?
-            first_build_test_count = actions['totalCount'].to_i unless first_build_test_count > 0
-            last_build_test_count = actions['totalCount'].to_i
-          end
-        end
-      end
-    end
-
-    self.test_count = first_build_test_count
-    self.prev_test_count = last_build_test_count
-    self.num_builds = number_of_builds
-    self.num_failed_builds = number_of_failed_builds
+    self.test_count = job_data.stats[:first_build_test_count]
+    self.prev_test_count = job_data.stats[:last_build_test_count]
+    self.num_builds = job_data.stats[:number_of_builds]
+    self.num_failed_builds = job_data.stats[:number_of_failed_builds]
 
     self.save
   end

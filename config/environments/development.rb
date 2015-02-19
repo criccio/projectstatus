@@ -28,10 +28,4 @@ Projectstatus::Application.configure do
   config.assets.debug = true
 
 
-  # map of auth tokens for various jenkins servers
-  # hash key will be used in a regex of the jenkins url to determine if it should be used
-  # keep this map empty if anonymous users can access the job page
-  config.jenkins_auth_map = {}
-  # config.jenkins_auth_map['builds'] = { user: 'username', pw: 'password'}
-
 end
